@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Systems of Linear Equations — Scaffolded Worksheet</title>
+  <title>Math Worksheet Site</title>
 
   <link
     rel="icon"
@@ -15,18 +15,21 @@
   <script>
     window.MathJax = {
       tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
-      svg: { fontCache: 'global' }
+      chtml: {
+        fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'
+      }
     };
   </script>
 
-  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
 
   <script type="module" src="./assets/js/app.js"></script>
 </head>
 <body>
-  <div id="toolbar" class="toolbar"></div>
-  <div id="status" class="status" role="status">Loading worksheet…</div>
+  <div id="toolbar" class="toolbar screen-only"></div>
+  <div id="worksheet-picker" class="screen-panel screen-only"></div>
+  <div id="status" class="status screen-only" role="status">Loading worksheet…</div>
   <div id="worksheet-root"></div>
 </body>
 </html>

@@ -41,7 +41,7 @@ export function renderHeader({ title, subtitle }) {
 
 export function renderMethodClues(clues) {
   return box("directions", `
-    <strong>Look for the clue. Do not solve yet.</strong>
+    <strong>Look for the clue.</strong>
     <div class="method-options">
       ${clues.map(({ clue, method }) => `
         <div class="option">${withAnswers(clue)} → <strong>${withAnswers(method)}</strong></div>
@@ -80,6 +80,19 @@ export function renderPracticeProblem({ id, title, system, prompts, solution }) 
   `, { compact: true });
 }
 
+export function renderWorkspaceProblem(problem, options = {}) {
+  const { id, title, system, prompt, solution } = problem;
+  const workspaceLines = options.workspaceLines ?? 4;
+
+  return card(`
+    <div class="problem-title">${escapeHtml(id)}. ${withAnswers(title)}</div>
+    <div class="system">${mathSystem(system)}</div>
+    ${prompt ? `<div>${withAnswers(prompt)}</div>` : ""}
+    ${renderWorkspaceLines(workspaceLines)}
+    <strong>Solution:</strong> ${answer(solution)}
+  `);
+}
+
 export function renderSolutionRules(rules) {
   return `
     <table class="solution-table">
@@ -95,13 +108,17 @@ export function renderSolutionRules(rules) {
   `;
 }
 
-export function renderSolutionCountCard({ id, equations, work, result }) {
+export function renderSolutionCountCard(problem, options = {}) {
+  const { id, equations, work, result } = problem;
+  const workspaceLines = options.workspaceLines ?? 0;
+
   return card(`
     <div class="problem-title">${escapeHtml(id)}.</div>
     ${equations.map(mathInline).join("<br />")}<br />
+    ${workspaceLines > 0 ? renderWorkspaceLines(workspaceLines, "Work / rewrite:") : ""}
     Work: ${answer(work)}<br />
     Number of solutions: ${answer(result)}
-  `, { compact: true });
+  `, { compact: workspaceLines === 0 });
 }
 
 export function renderExitTicketCard({ title, body, bodyHtml }) {
@@ -119,5 +136,14 @@ function renderStep({ label, prompt, math }) {
       <strong>${escapeHtml(label)}:</strong> ${withAnswers(prompt)}
       <div class="math-line">${withAnswers(math)}</div>
     </div>
+  `;
+}
+
+function renderWorkspaceLines(count, label = "Work space:") {
+  const lines = Array.from({ length: count }, () => `<div class="workspace-line"></div>`).join("");
+
+  return `
+    <div class="workspace-label">${escapeHtml(label)}</div>
+    <div class="workspace-lines">${lines}</div>
   `;
 }

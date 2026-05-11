@@ -6,6 +6,7 @@ import { validateWorksheet } from "./validate/worksheet-validator.js";
  * Worksheet loading.
  *
  * Responsibility:
+ * - load the worksheet manifest
  * - determine which worksheet slug to load
  * - resolve the worksheet URL safely
  * - fetch YAML
@@ -14,16 +15,45 @@ import { validateWorksheet } from "./validate/worksheet-validator.js";
  * - return immutable data
  */
 
-const DEFAULT_WORKSHEET_SLUG = "systems-linear-equations";
+const DEFAULT_FALLBACK_SLUG = "systems-solving-methods";
 const WORKSHEET_DIRECTORY = "./assets/worksheets/";
+const WORKSHEET_INDEX_PATH = "./assets/worksheets/index.yaml";
 
-export async function loadWorksheet(slug = getWorksheetSlugFromUrl()) {
-  const worksheetUrl = getWorksheetUrl(slug);
+export async function loadWorksheetIndex() {
+  const indexUrl = new URL(WORKSHEET_INDEX_PATH, document.baseURI);
+  const response = await fetch(indexUrl, { cache: "no-store" });
+
+  if (!response.ok) {
+    throw new Error(
+      `Could not load worksheet index at ${indexUrl.href}: ${response.status} ${response.statusText}`
+    );
+  }
+
+  const yamlText = await response.text();
+  const index = parseYaml(yamlText);
+
+  if (!index || !Array.isArray(index.worksheets)) {
+    throw new Error("Worksheet index must include a worksheets list.");
+  }
+
+  return deepFreeze({
+    default: normalizeWorksheetSlug(index.default || DEFAULT_FALLBACK_SLUG),
+    worksheets: index.worksheets.map((worksheet) => ({
+      slug: normalizeWorksheetSlug(worksheet.slug),
+      title: String(worksheet.title || worksheet.slug),
+      description: String(worksheet.description || ""),
+    })),
+  });
+}
+
+export async function loadWorksheet(slug) {
+  const safeSlug = normalizeWorksheetSlug(slug || DEFAULT_FALLBACK_SLUG);
+  const worksheetUrl = getWorksheetUrl(safeSlug);
   const response = await fetch(worksheetUrl, { cache: "no-store" });
 
   if (!response.ok) {
     throw new Error(
-      `Could not load worksheet "${slug}" at ${worksheetUrl.href}: ${response.status} ${response.statusText}`
+      `Could not load worksheet "${safeSlug}" at ${worksheetUrl.href}: ${response.status} ${response.statusText}`
     );
   }
 
@@ -36,17 +66,25 @@ export async function loadWorksheet(slug = getWorksheetSlugFromUrl()) {
     ...data,
     meta: {
       ...(data.meta ?? {}),
-      slug,
+      slug: safeSlug,
       url: worksheetUrl.href,
     },
   });
 }
 
-function getWorksheetSlugFromUrl() {
+export function getWorksheetSlugFromUrl(defaultSlug = DEFAULT_FALLBACK_SLUG) {
   const params = new URLSearchParams(window.location.search);
-  const slug = params.get("sheet") || DEFAULT_WORKSHEET_SLUG;
+  const slug = params.get("sheet") || defaultSlug;
 
   return normalizeWorksheetSlug(slug);
+}
+
+export function setWorksheetSlugInUrl(slug) {
+  const safeSlug = normalizeWorksheetSlug(slug);
+  const url = new URL(window.location.href);
+
+  url.searchParams.set("sheet", safeSlug);
+  window.history.pushState({}, "", url);
 }
 
 function normalizeWorksheetSlug(slug) {

@@ -1,0 +1,126 @@
+title: "Systems: Solving Methods"
+subtitle: "Integrated Math 101 — Elimination and Substitution Practice"
+
+content:
+  goal: "I can solve simple systems using elimination or substitution."
+
+  methodClues:
+    - clue: "Opposites are lined up, like \\( +y \\) and \\( -y \\)"
+      method: "Add"
+    - clue: "Same term is lined up, like \\( 2x \\) and \\( 2x \\)"
+      method: "Subtract"
+    - clue: "\\( y = \\) is already alone"
+      method: "Substitute for \\( y \\)"
+    - clue: "\\( x = \\) is already alone"
+      method: "Substitute for \\( x \\)"
+
+  guidedProblems:
+    - id: 1
+      title: "Elimination by Addition"
+      system: ["x+y=10", "x-y=4"]
+      hint: "Use addition when one variable has opposites, like \\( +y \\) and \\( -y \\)."
+      steps:
+        - label: "Step 1"
+          prompt: "Add straight down."
+          math: "\\( x+x= \\) {{2x}} &nbsp; \\( y+(-y)= \\) {{0}}"
+        - label: "Step 2"
+          prompt: "Solve."
+          math: "\\( 2x=14 \\), so \\( x= \\) {{7}}"
+        - label: "Step 3"
+          prompt: "Substitute back."
+          math: "\\( 7+y=10 \\), so \\( y= \\) {{3}}"
+      solution: "\\((7,3)\\)"
+
+    - id: 2
+      title: "Elimination by Subtraction"
+      system: ["x+3y=15", "x+y=7"]
+      hint: "Use subtraction when one variable term is exactly the same in both equations."
+      steps:
+        - label: "Step 1"
+          prompt: "Subtract straight down."
+          math: "\\( x-x= \\) {{0}} &nbsp; \\( 3y-y= \\) {{2y}}"
+        - label: "Step 2"
+          prompt: "Solve."
+          math: "\\( 2y=8 \\), so \\( y= \\) {{4}}"
+        - label: "Step 3"
+          prompt: "Substitute back."
+          math: "\\( x+4=7 \\), so \\( x= \\) {{3}}"
+      solution: "\\((3,4)\\)"
+
+    - id: 3
+      title: "Substitution for \\( y \\)"
+      system: ["y=x+2", "2x+y=14"]
+      hint: "If you see \\( y= \\) already, replace \\( y \\) in the other equation."
+      steps:
+        - label: "Step 1"
+          prompt: "Replace \\( y \\)."
+          math: "\\( 2x+(x+2)=14 \\)"
+        - label: "Step 2"
+          prompt: "Solve."
+          math: "\\( 3x+2=14 \\), so \\( 3x=12 \\), so \\( x= \\) {{4}}"
+        - label: "Step 3"
+          prompt: "Find \\( y \\)."
+          math: "\\( y=4+2 \\), so \\( y= \\) {{6}}"
+      solution: "\\((4,6)\\)"
+
+    - id: 4
+      title: "Substitution for \\( x \\)"
+      system: ["x=y+1", "x+2y=13"]
+      hint: "If you see \\( x= \\) already, replace \\( x \\) in the other equation."
+      steps:
+        - label: "Step 1"
+          prompt: "Replace \\( x \\)."
+          math: "\\( (y+1)+2y=13 \\)"
+        - label: "Step 2"
+          prompt: "Solve."
+          math: "\\( 3y+1=13 \\), so \\( 3y=12 \\), so \\( y= \\) {{4}}"
+        - label: "Step 3"
+          prompt: "Find \\( x \\)."
+          math: "\\( x=4+1 \\), so \\( x= \\) {{5}}"
+      solution: "\\((5,4)\\)"
+
+  workspaceProblems:
+    - id: 5
+      title: "You Try: Add"
+      system: ["2x+y=13", "x-y=2"]
+      prompt: "The opposites are already lined up. Add straight down."
+      solution: "\\((5,3)\\)"
+
+    - id: 6
+      title: "You Try: Subtract"
+      system: ["3x+2y=16", "3x+y=11"]
+      prompt: "The matching terms are already lined up. Subtract straight down."
+      solution: "\\((2,5)\\)"
+
+    - id: 7
+      title: "You Try: Substitute for \\( y \\)"
+      system: ["y=2x-1", "x+y=11"]
+      prompt: "Replace \\( y \\) in the other equation."
+      solution: "\\((4,7)\\)"
+
+    - id: 8
+      title: "You Try: Substitute for \\( x \\)"
+      system: ["x=2y-3", "x+y=12"]
+      prompt: "Replace \\( x \\) in the other equation."
+      solution: "\\((7,5)\\)"
+
+pages:
+  - header: true
+    sections:
+      - type: "goal"
+
+      - type: "method-clues"
+        title: "Method Clues"
+        source: "methodClues"
+
+      - type: "guided-problems"
+        title: "Part A — Guided Practice"
+        source: "guidedProblems"
+        columns: "2"
+
+  - sections:
+      - type: "workspace-problems"
+        title: "Part B — You Try"
+        source: "workspaceProblems"
+        columns: "2"
+        workspaceLines: 6

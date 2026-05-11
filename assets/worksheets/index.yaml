@@ -1,0 +1,10 @@
+default: "systems-solving-methods"
+
+worksheets:
+  - slug: "systems-solving-methods"
+    title: "Systems: Solving Methods"
+    description: "Elimination and substitution practice with workspace."
+
+  - slug: "systems-number-of-solutions"
+    title: "Systems: How Many Solutions?"
+    description: "Compare slopes and y-intercepts to decide the number of solutions."

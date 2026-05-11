@@ -23,6 +23,7 @@ import {
   renderPracticeProblem,
   renderSolutionCountCard,
   renderSolutionRules,
+  renderWorkspaceProblem,
 } from "./components.js";
 
 const DEFAULT_COLUMNS = "1";
@@ -33,6 +34,7 @@ const SECTION_RENDERERS = {
   "method-recognition": renderMethodRecognitionSection,
   "guided-problems": renderGuidedProblemsSection,
   "practice-problems": renderPracticeProblemsSection,
+  "workspace-problems": renderWorkspaceProblemsSection,
   "solution-count": renderSolutionCountSection,
   "exit-ticket": renderExitTicketSection,
 };
@@ -129,11 +131,27 @@ function renderPracticeProblemsSection(content, section) {
   `;
 }
 
+function renderWorkspaceProblemsSection(content, section) {
+  const problems = getSource(content, section);
+  const columns = section.columns ?? DEFAULT_COLUMNS;
+  const options = {
+    workspaceLines: section.workspaceLines ?? 4,
+  };
+
+  return `
+    ${renderSectionTitle(section.title)}
+    ${grid(columns, problems.map((problem) => renderWorkspaceProblem(problem, options)).join(""))}
+  `;
+}
+
 function renderSolutionCountSection(content, section) {
   const problems = getSource(content, section);
   const columns = section.columns ?? DEFAULT_COLUMNS;
   const rulesSource = section.rulesSource ?? "solutionRules";
   const rules = content[rulesSource];
+  const options = {
+    workspaceLines: section.workspaceLines ?? 0,
+  };
 
   if (!rules) {
     throw new Error(`Solution-count section could not find rules source: ${rulesSource}`);
@@ -145,7 +163,7 @@ function renderSolutionCountSection(content, section) {
       Put both equations in ${mathInline("y=mx+b")} form. Then compare slopes and y-intercepts.
       ${renderSolutionRules(rules)}
     `)}
-    ${grid(columns, problems.map(renderSolutionCountCard).join(""))}
+    ${grid(columns, problems.map((problem) => renderSolutionCountCard(problem, options)).join(""))}
   `;
 }
 
