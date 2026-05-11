@@ -1,98 +1,91 @@
+import { validateWorksheet } from "./validate/worksheet-validator.js";
+
 /* global jsyaml */
 
 /**
- * Worksheet loading and validation.
+ * Worksheet loading.
  *
- * This file fetches YAML, parses it, and performs lightweight shape validation
- * before handing data to the renderer.
- *
- * Important for GitHub Pages:
- * All default paths are resolved relative to document.baseURI, so this works
- * both locally and at https://username.github.io/repo-name/.
+ * Responsibility:
+ * - determine which worksheet slug to load
+ * - resolve the worksheet URL safely
+ * - fetch YAML
+ * - parse YAML
+ * - validate basic worksheet shape
+ * - return immutable data
  */
 
-const DEFAULT_WORKSHEET_PATH = "./assets/worksheets/systems-linear-equations.yaml";
+const DEFAULT_WORKSHEET_SLUG = "systems-linear-equations";
+const WORKSHEET_DIRECTORY = "./assets/worksheets/";
 
-function resolveSiteUrl(path) {
-  return new URL(path, document.baseURI);
-}
-
-async function loadWorksheet(path = DEFAULT_WORKSHEET_PATH) {
-  const worksheetUrl = resolveSiteUrl(path);
+export async function loadWorksheet(slug = getWorksheetSlugFromUrl()) {
+  const worksheetUrl = getWorksheetUrl(slug);
   const response = await fetch(worksheetUrl, { cache: "no-store" });
 
   if (!response.ok) {
     throw new Error(
-      `Could not load worksheet at ${worksheetUrl.href}: ${response.status} ${response.statusText}`
+      `Could not load worksheet "${slug}" at ${worksheetUrl.href}: ${response.status} ${response.statusText}`
     );
   }
 
   const yamlText = await response.text();
+  const data = parseYaml(yamlText);
 
-  let data;
+  validateWorksheet(data);
+
+  return deepFreeze({
+    ...data,
+    meta: {
+      ...(data.meta ?? {}),
+      slug,
+      url: worksheetUrl.href,
+    },
+  });
+}
+
+function getWorksheetSlugFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("sheet") || DEFAULT_WORKSHEET_SLUG;
+
+  return normalizeWorksheetSlug(slug);
+}
+
+function normalizeWorksheetSlug(slug) {
+  const normalized = String(slug).trim().toLowerCase();
+
+  if (!/^[a-z0-9-]+$/.test(normalized)) {
+    throw new Error(
+      `Invalid worksheet slug "${slug}". Use only lowercase letters, numbers, and hyphens.`
+    );
+  }
+
+  return normalized;
+}
+
+function getWorksheetUrl(slug) {
+  const safeSlug = normalizeWorksheetSlug(slug);
+  return new URL(`${WORKSHEET_DIRECTORY}${safeSlug}.yaml`, document.baseURI);
+}
+
+function parseYaml(yamlText) {
   try {
-    data = jsyaml.load(yamlText);
+    return jsyaml.load(yamlText);
   } catch (error) {
     throw new Error(`YAML parse error: ${error.message}`);
   }
-
-  validateWorksheet(data);
-  return Object.freeze(data);
 }
 
-function validateWorksheet(data) {
-  if (!data || typeof data !== "object" || Array.isArray(data)) {
-    throw new Error("Worksheet YAML must contain a top-level object.");
+function deepFreeze(value) {
+  if (!value || typeof value !== "object") {
+    return value;
   }
 
-  const requiredTopLevelFields = [
-    "title",
-    "subtitle",
-    "goal",
-    "methodClues",
-    "methodRecognition",
-    "eliminationGuided",
-    "eliminationPractice",
-    "substitutionGuided",
-    "substitutionPractice",
-    "solutionRules",
-    "solutionCount",
-    "exitTicket",
-  ];
+  Object.freeze(value);
 
-  requiredTopLevelFields.forEach((field) => {
-    if (!(field in data)) {
-      throw new Error(`Worksheet is missing required field: ${field}`);
+  Object.values(value).forEach((child) => {
+    if (child && typeof child === "object" && !Object.isFrozen(child)) {
+      deepFreeze(child);
     }
   });
 
-  validateList(data.methodClues, "methodClues");
-  validateProblemList(data.methodRecognition, "methodRecognition");
-  validateProblemList(data.eliminationGuided, "eliminationGuided");
-  validateProblemList(data.eliminationPractice, "eliminationPractice");
-  validateProblemList(data.substitutionGuided, "substitutionGuided");
-  validateProblemList(data.substitutionPractice, "substitutionPractice");
-  validateProblemList(data.solutionCount, "solutionCount");
-  validateList(data.solutionRules, "solutionRules");
-  validateList(data.exitTicket, "exitTicket");
-}
-
-function validateList(value, fieldName) {
-  if (!Array.isArray(value)) {
-    throw new Error(`${fieldName} must be a list.`);
-  }
-}
-
-function validateProblemList(problems, fieldName) {
-  validateList(problems, fieldName);
-
-  problems.forEach((problem, index) => {
-    if (!problem || typeof problem !== "object") {
-      throw new Error(`${fieldName}[${index}] must be an object.`);
-    }
-
-    if (problem.id === undefined) {
-      throw new Error(`${fieldName}[${index}] is missing an id.`);
-    }
-  });
+  return value;
 }

@@ -1,10 +1,9 @@
-/* global loadWorksheet, renderToolbar, renderWorksheet, MathJax */
+import { loadWorksheet } from "./worksheet-loader.js";
+import { renderToolbar } from "./render/components.js";
+import { renderWorksheet } from "./render/worksheet.js";
 
 /**
  * App bootstrap and DOM wiring.
- *
- * Keep this file imperative and small. All worksheet content lives in YAML;
- * all rendering decisions live in render.js.
  */
 
 function mount(selector, html) {
@@ -21,14 +20,22 @@ function typesetMath() {
   if (window.MathJax?.typesetPromise) {
     return window.MathJax.typesetPromise();
   }
+
   return Promise.resolve();
 }
 
 function bindToolbar() {
   document.querySelector("#toolbar")?.addEventListener("click", (event) => {
     const action = event.target?.dataset?.action;
-    if (action === "print") window.print();
-    if (action === "toggle-key") document.body.classList.toggle("show-key");
+
+    if (action === "print") {
+      window.print();
+      return;
+    }
+
+    if (action === "toggle-key") {
+      document.body.classList.toggle("show-key");
+    }
   });
 }
 
@@ -39,12 +46,25 @@ async function boot() {
 
     const worksheet = await loadWorksheet();
     mount("#worksheet-root", renderWorksheet(worksheet));
+
     await typesetMath();
     setStatus("");
   } catch (error) {
     console.error(error);
-    setStatus(`Could not load worksheet: ${error.message}`);
+    setStatus(`
+      <strong>Could not load worksheet.</strong><br />
+      ${escapeHtml(error.message)}
+    `);
   }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 boot();
