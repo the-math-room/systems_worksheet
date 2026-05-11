@@ -44,18 +44,10 @@ export function blank(size = "md") {
   return `<span class="student-blank blank blank--${size}"></span>`;
 }
 
-export function answer(value) {
-  return `${blank(answerSize(value))}<span class="key-answer">${escapeTextButAllowSafeEntities(value)}</span>`;
-}
+export function answer(value, options = {}) {
+  const blankSize = options.blankSize ?? "md";
 
-export function answerSize(value) {
-  const plain = String(value)
-    .replace(/<[^>]+>/g, "")
-    .replace(/\\\(.+?\\\)/g, "math");
-
-  if (plain.length <= 3) return "sm";
-  if (plain.length <= 18) return "md";
-  return "lg";
+  return `${blank(blankSize)}<span class="key-answer">${escapeTextButAllowSafeEntities(value)}</span>`;
 }
 
 export function withAnswers(template) {

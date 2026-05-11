@@ -54,8 +54,8 @@ export function renderMethodCard({ id, system, notice, method }) {
   return card(`
     <div class="problem-title">${escapeHtml(id)}.</div>
     <div class="system">${mathSystem(system)}</div>
-    What do you notice? ${answer(notice)}<br />
-    Best method: ${answer(method)}
+    <span class="no-break">What do you notice? ${answer(notice)}</span><br />
+    <span class="no-break">Best method: ${answer(method)}</span>
   `, { compact: true });
 }
 
@@ -66,7 +66,7 @@ export function renderGuidedProblem({ id, title, system, hint, steps, solution }
     ${box("hint", withAnswers(hint))}
     <div class="steps">
       ${steps.map(renderStep).join("")}
-      <div class="step"><strong>Solution:</strong> ${answer(solution)}</div>
+      <div class="step no-break"><strong>Solution:</strong> ${answer(solution)}</div>
     </div>
   `);
 }
@@ -89,7 +89,7 @@ export function renderWorkspaceProblem(problem, options = {}) {
     <div class="system">${mathSystem(system)}</div>
     ${prompt ? `<div>${withAnswers(prompt)}</div>` : ""}
     ${renderWorkspaceLines(workspaceLines, "Work space:", options.workspaceStyle)}
-    <strong>Solution:</strong> ${answer(solution)}
+    <span class="no-break"><strong>Solution:</strong> ${answer(solution)}</span>
   `);
 }
 
@@ -184,11 +184,7 @@ export function renderLineComparisonProblem(problem, options = {}) {
     Slopes are: ${answer(slopeCompare)}<br />
     Y-intercepts are: ${answer(interceptCompare)}<br />
 
-    <div class="answer-choices">
-      Choices: one solution &nbsp; | &nbsp; no solution &nbsp; | &nbsp; infinite solutions
-    </div>
-
-    <strong>Number of solutions:</strong> ${answer(result)}
+    ${renderNumberOfSolutionsAnswer(result, options.answerStyle)}
   `);
 }
 
@@ -223,5 +219,27 @@ function renderWorkspaceLines(count, label = "Work space:", style = "blank") {
       class="workspace-box workspace-box--blank"
       style="--workspace-lines: ${safeCount};"
     ></div>
+  `;
+}
+
+function renderNumberOfSolutionsAnswer(result, answerStyle = "blank") {
+  if (answerStyle === "circle") {
+    return `
+      <div class="answer-choices">
+        <strong>Circle one:</strong>
+        &nbsp no solution &nbsp;
+        | &nbsp one solution &nbsp;
+        | &nbsp infinite solutions
+        <span class="key-answer"> Answer: ${escapeHtml(result)}</span>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="answer-choices">
+      Choices: no solutions &nbsp; | &nbsp; one solution &nbsp; | &nbsp; infinite solutions
+    </div>
+
+    <strong>Number of solutions:</strong> ${answer(result)}
   `;
 }

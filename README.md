@@ -26,7 +26,13 @@ The worksheet picker and authoring notes appear on screen only. They do not prin
 ├── index.html
 ├── assets/
 │   ├── css/
-│   │   └── styles.css
+│   │   ├── base.css
+│   │   ├── components.css
+│   │   ├── layout.css
+│   │   ├── print.css
+│   │   ├── screen.css
+│   │   ├── styles.css
+│   │   └── worksheet.css
 │   ├── js/
 │   │   ├── app.js
 │   │   ├── worksheet-loader.js
@@ -41,12 +47,18 @@ The worksheet picker and authoring notes appear on screen only. They do not prin
 │       ├── systems-solving-methods.yaml
 │       └── systems-number-of-solutions.yaml
 └── README.md
-````
+```
 
 ## Separation of concerns
 
 - `index.html`: page shell and script/style links
-- `assets/css/styles.css`: screen, print, worksheet, and picker styling
+- `assets/css/styles.css`: CSS entry point that imports the other CSS files
+- `assets/css/base.css`: design tokens and global defaults
+- `assets/css/layout.css`: page and grid layout primitives
+- `assets/css/components.css`: reusable boxes, cards, blanks, and teacher-key styling
+- `assets/css/worksheet.css`: worksheet-specific educational components
+- `assets/css/screen.css`: toolbar, picker, and authoring panel
+- `assets/css/print.css`: print-only rules
 - `assets/worksheets/index.yaml`: list of available worksheets for the picker
 - `assets/worksheets/*.yaml`: individual worksheet content and page layout
 - `assets/js/worksheet-loader.js`: loads the worksheet index and selected worksheet YAML
@@ -224,6 +236,7 @@ guided-problems
 practice-problems
 workspace-problems
 solution-count
+line-comparison
 exit-ticket
 ```
 
@@ -251,6 +264,34 @@ math: "\\( 2x=14 \\), so \\( x= \\) {{7}}"
 Student view shows a blank.
 
 Teacher-key view shows the answer.
+
+By default, answer blanks are medium width. The blank size does not change based on the length of the teacher-key answer.
+
+## Workspace
+
+Workspace sections can use blank space or ruled lines.
+
+Example with blank workspace:
+
+```yaml
+- type: "workspace-problems"
+  title: "Part B — You Try"
+  source: "workspaceProblems"
+  columns: "2"
+  workspaceLines: 6
+  workspaceStyle: "blank"
+```
+
+Example with ruled workspace:
+
+```yaml
+- type: "workspace-problems"
+  title: "Part B — You Try"
+  source: "workspaceProblems"
+  columns: "2"
+  workspaceLines: 6
+  workspaceStyle: "ruled"
+```
 
 ## Raw HTML convention
 

@@ -1,6 +1,9 @@
 title: "Systems: How Many Solutions?"
 subtitle: "Integrated Math 101 — Comparing Lines"
 
+layout:
+  className: "number-solutions-compact"
+
 content:
   goal: "I can decide whether a system has one solution, no solution, or infinite solutions by comparing slopes and y-intercepts."
 
@@ -110,29 +113,31 @@ pages:
     sections:
       - type: "goal"
 
-      - type: "solution-count"
+      - type: "rules-table"
         title: "Rule: Compare the Lines"
-        source: "guidedExamples"
-        rulesSource: "ruleBox"
-        columns: "2"
+        source: "ruleBox"
+        prompt: "Use the slopes and y-intercepts to decide how many solutions there are."
 
       - type: "line-comparison"
-        title: "Part A — Guided Comparisons"
+        title: "Part A — Compare the Lines"
         source: "guidedExamples"
         columns: "2"
+        answerStyle: "circle"
 
-  - sections:
       - type: "line-comparison"
         title: "Part B — Rewrite First"
         source: "guidedRewrite"
         columns: "2"
-        workspaceLines: 2
+        workspaceLines: 1
         workspaceStyle: "blank"
+        answerStyle: "circle"
 
+  - sections:
       - type: "line-comparison"
         title: "Part C — You Try"
         source: "practiceProblems"
         columns: "2"
+        answerStyle: "circle"
 
       - type: "line-comparison"
         title: "Part D — You Try: Rewrite First"
@@ -140,3 +145,4 @@ pages:
         columns: "2"
         workspaceLines: 3
         workspaceStyle: "blank"
+        answerStyle: "circle"

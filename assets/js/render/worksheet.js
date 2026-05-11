@@ -38,15 +38,21 @@ const SECTION_RENDERERS = {
   "workspace-problems": renderWorkspaceProblemsSection,
   "solution-count": renderSolutionCountSection,
   "line-comparison": renderLineComparisonSection,
+  "rules-table": renderRulesTableSection,
   "exit-ticket": renderExitTicketSection,
 };
 
 export function renderWorksheet(data) {
   const content = data.content ?? data;
+  const layoutClass = data.layout?.className
+    ? ` worksheet--${data.layout.className}`
+    : "";
 
-  return data.pages
+  const pagesHtml = data.pages
     .map((pageData, pageIndex) => renderWorksheetPage(data, content, pageData, pageIndex))
     .join("");
+
+  return `<div class="worksheet${layoutClass}">${pagesHtml}</div>`;
 }
 
 function renderWorksheetPage(data, content, pageData, pageIndex) {
@@ -147,6 +153,19 @@ function renderWorkspaceProblemsSection(content, section) {
   `;
 }
 
+function renderRulesTableSection(content, section) {
+  const rules = getSource(content, section);
+  const prompt = section.prompt ?? "Compare the slopes and y-intercepts.";
+
+  return `
+    ${renderSectionTitle(section.title)}
+    ${box("directions", `
+      ${escapeHtml(prompt)}
+      ${renderSolutionRules(rules)}
+    `)}
+  `;
+}
+
 function renderSolutionCountSection(content, section) {
   const problems = getSource(content, section);
   const columns = section.columns ?? DEFAULT_COLUMNS;
@@ -177,6 +196,7 @@ function renderLineComparisonSection(content, section) {
   const options = {
     workspaceLines: section.workspaceLines ?? 0,
     workspaceStyle: section.workspaceStyle ?? "blank",
+    answerStyle: section.answerStyle ?? "blank",
   };
 
   return `

@@ -44,13 +44,13 @@
 .card {
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 9px 10px;
+  padding: 8px 9px;
   break-inside: avoid;
   background: white;
 }
 
 .card--compact {
-  padding: 7px 9px;
+  padding: 6px 8px;
 }
 
 /* ============================================================
@@ -73,19 +73,23 @@
 }
 
 .blank {
-  min-width: 1.25in;
+  min-width: 1.05in;
 }
 
 .blank--sm {
-  min-width: 0.75in;
+  min-width: 0.6in;
 }
 
 .blank--md {
-  min-width: 1.5in;
+  min-width: 1.2in;
 }
 
 .blank--lg {
-  min-width: 2.25in;
+  min-width: 1.8in;
+}
+
+.no-break {
+  white-space: nowrap;
 }
 
 /* ============================================================

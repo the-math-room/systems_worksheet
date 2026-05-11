@@ -34,7 +34,7 @@
    SECTION TITLES
    ============================================================ */
 .section-title {
-  margin: 14px 0 7px;
+  margin: 11px 0 5px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -59,17 +59,17 @@
 
 .system {
   font-size: 16px;
-  margin: 5px 0 7px;
+  margin: 3px 0 5px;
   text-align: center;
 }
 
 .steps {
   display: grid;
-  gap: 5px;
+  gap: 3px;
 }
 
 .step {
-  padding-top: 4px;
+  padding-top: 3px;
   border-top: 1px dashed #e5e7eb;
 }
 
@@ -80,9 +80,22 @@
 
 .math-line {
   font-size: 14px;
-  margin: 3px 0;
+  margin: 2px 0;
   text-align: center;
-  min-height: 19px;
+  min-height: 17px;
+  white-space: nowrap;
+}
+
+.math-line .blank {
+  min-width: 0.85in;
+}
+
+.math-line .blank--md {
+  min-width: 0.85in;
+}
+
+.math-line .blank--lg {
+  min-width: 1.1in;
 }
 
 /* ============================================================
@@ -144,8 +157,8 @@
 }
 
 .workspace-box {
-  min-height: calc(var(--workspace-lines, 4) * 28px);
-  margin: 8px 0 6px;
+  min-height: calc(var(--workspace-lines, 4) * 24px);
+  margin: 6px 0 5px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: white;
@@ -182,10 +195,28 @@
   border: 1px solid var(--line);
   padding: 5px;
   text-align: center;
+  height: 24px;
 }
 
 .comparison-table th {
   background: var(--soft);
+}
+
+/*
+   In comparison tables, the table cells themselves are the answer spaces.
+   Hiding student underline blanks keeps the table less cluttered.
+   Teacher-key answers still appear when the key is toggled on.
+*/
+.comparison-table .student-blank {
+  display: none;
+}
+
+.comparison-table .key-answer {
+  display: none;
+}
+
+body.show-key .comparison-table .key-answer {
+  display: inline;
 }
 
 .answer-choices {
@@ -195,4 +226,60 @@
   border-radius: 8px;
   color: var(--muted);
   font-size: 12px;
+}
+
+/* ============================================================
+   WORKSHEET-SPECIFIC LAYOUT TUNING
+   ============================================================ */
+
+/*
+  Systems: How Many Solutions?
+  Goal: fit the rule box + four scaffolded comparison cards on page 1.
+*/
+.worksheet--number-solutions-compact .box {
+  padding: 7px 9px;
+  margin: 6px 0;
+}
+
+.worksheet--number-solutions-compact .section-title {
+  margin: 9px 0 4px;
+}
+
+.worksheet--number-solutions-compact .card {
+  padding: 7px 8px;
+}
+
+.worksheet--number-solutions-compact .problem-title {
+  margin-bottom: 3px;
+}
+
+.worksheet--number-solutions-compact .system {
+  font-size: 15px;
+  margin: 2px 0 4px;
+}
+
+.worksheet--number-solutions-compact .comparison-table {
+  margin: 4px 0;
+  font-size: 11.5px;
+}
+
+.worksheet--number-solutions-compact .comparison-table th,
+.worksheet--number-solutions-compact .comparison-table td {
+  padding: 3px 4px;
+  height: 22px;
+}
+
+.worksheet--number-solutions-compact .answer-choices {
+  margin-top: 4px;
+  padding: 4px 6px;
+  font-size: 11.5px;
+}
+
+.worksheet--number-solutions-compact .workspace-label {
+  margin-top: 4px;
+}
+
+.worksheet--number-solutions-compact .workspace-box {
+  min-height: calc(var(--workspace-lines, 4) * 20px);
+  margin: 4px 0;
 }

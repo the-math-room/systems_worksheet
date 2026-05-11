@@ -1,6 +1,9 @@
 title: "Systems: Solving Methods"
 subtitle: "Integrated Math 101 — Elimination and Substitution Practice"
 
+layout:
+  className: "systems-solving-methods"
+
 content:
   goal: "I can solve simple systems using elimination or substitution."
 
@@ -124,5 +127,5 @@ pages:
         title: "Part B — You Try"
         source: "workspaceProblems"
         columns: "2"
-        workspaceLines: 6
+        workspaceLines: 10
         workspaceStyle: "blank"
