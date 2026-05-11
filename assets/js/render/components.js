@@ -188,6 +188,78 @@ export function renderLineComparisonProblem(problem, options = {}) {
   `);
 }
 
+export function renderSolutionMeaning() {
+  return box("directions", `
+    <strong>A solution to a system is where the two lines meet.</strong>
+
+    <div class="solution-meaning-grid">
+      ${renderSolutionMeaningCard({
+        title: "One solution",
+        caption: "The lines cross once.",
+        svg: renderIntersectingLinesSvg(),
+      })}
+
+      ${renderSolutionMeaningCard({
+        title: "No solution",
+        caption: "Parallel lines never cross.",
+        svg: renderParallelLinesSvg(),
+      })}
+
+      ${renderSolutionMeaningCard({
+        title: "Infinite solutions",
+        caption: "Same line: every point matches.",
+        svg: renderSameLineSvg(),
+      })}
+    </div>
+
+    <div class="solution-meaning-note">
+      The slope and y-intercept help us tell which picture we have.
+    </div>
+  `);
+}
+
+function renderSolutionMeaningCard({ title, caption, svg }) {
+  return `
+    <div class="solution-meaning-card">
+      <div class="solution-meaning-card__title">${escapeHtml(title)}</div>
+      ${svg}
+      <div class="solution-meaning-card__caption">${escapeHtml(caption)}</div>
+    </div>
+  `;
+}
+
+function renderGraphFrame(innerSvg) {
+  return `
+    <svg class="solution-meaning-graph" viewBox="0 0 160 90" role="img" aria-hidden="true">
+      <line x1="20" y1="80" x2="145" y2="80" stroke="#cbd5e1" stroke-width="1" />
+      <line x1="20" y1="10" x2="20" y2="80" stroke="#cbd5e1" stroke-width="1" />
+      ${innerSvg}
+    </svg>
+  `;
+}
+
+function renderIntersectingLinesSvg() {
+  return renderGraphFrame(`
+    <line x1="30" y1="70" x2="135" y2="18" stroke="#111827" stroke-width="2" />
+    <line x1="30" y1="20" x2="135" y2="70" stroke="#111827" stroke-width="2" />
+    <circle cx="82" cy="44" r="4" fill="#111827" />
+  `);
+}
+
+function renderParallelLinesSvg() {
+  return renderGraphFrame(`
+    <line x1="30" y1="70" x2="135" y2="35" stroke="#111827" stroke-width="2" />
+    <line x1="30" y1="52" x2="135" y2="17" stroke="#111827" stroke-width="2" />
+  `);
+}
+
+function renderSameLineSvg() {
+  return renderGraphFrame(`
+    <line x1="30" y1="70" x2="135" y2="22" stroke="#111827" stroke-width="5" opacity="0.22" />
+    <line x1="30" y1="70" x2="135" y2="22" stroke="#111827" stroke-width="2" />
+  `);
+}
+
 function renderStep({ label, prompt, math }) {
   return `
     <div class="step">

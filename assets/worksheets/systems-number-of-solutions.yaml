@@ -113,6 +113,9 @@ pages:
     sections:
       - type: "goal"
 
+      - type: "solution-meaning"
+        title: "What Does a Solution Mean?"
+
       - type: "rules-table"
         title: "Rule: Compare the Lines"
         source: "ruleBox"
@@ -124,6 +127,10 @@ pages:
         columns: "2"
         answerStyle: "circle"
 
+
+
+  - sections:
+
       - type: "line-comparison"
         title: "Part B — Rewrite First"
         source: "guidedRewrite"
@@ -132,7 +139,6 @@ pages:
         workspaceStyle: "blank"
         answerStyle: "circle"
 
-  - sections:
       - type: "line-comparison"
         title: "Part C — You Try"
         source: "practiceProblems"

@@ -23,6 +23,7 @@ import {
   renderMethodClues,
   renderPracticeProblem,
   renderSolutionCountCard,
+  renderSolutionMeaning,
   renderSolutionRules,
   renderWorkspaceProblem,
 } from "./components.js";
@@ -39,6 +40,7 @@ const SECTION_RENDERERS = {
   "solution-count": renderSolutionCountSection,
   "line-comparison": renderLineComparisonSection,
   "rules-table": renderRulesTableSection,
+  "solution-meaning": renderSolutionMeaningSection,
   "exit-ticket": renderExitTicketSection,
 };
 
@@ -212,5 +214,12 @@ function renderExitTicketSection(content, section) {
   return `
     ${renderSectionTitle(section.title)}
     ${grid(columns, items.map(renderExitTicketCard).join(""))}
+  `;
+}
+
+function renderSolutionMeaningSection(content, section) {
+  return `
+    ${renderSectionTitle(section.title)}
+    ${renderSolutionMeaning()}
   `;
 }
