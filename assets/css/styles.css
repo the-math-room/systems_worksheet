@@ -142,6 +142,12 @@ strong { font-weight: 800; }
 /* ============================================================
    LAYOUT PRIMITIVES
    ============================================================ */
+.grid-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+}
+
 .grid-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;

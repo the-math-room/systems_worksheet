@@ -16,12 +16,23 @@ function setStatus(message) {
   mount("#status", message || "");
 }
 
-function typesetMath() {
-  if (window.MathJax?.typesetPromise) {
-    return window.MathJax.typesetPromise();
+function setDocumentTitle(worksheet) {
+  const title = worksheet?.title || "Math Worksheet";
+  document.title = `${title} — Scaffolded Worksheet`;
+}
+
+async function typesetMath() {
+  if (!window.MathJax) {
+    return;
   }
 
-  return Promise.resolve();
+  if (window.MathJax.startup?.promise) {
+    await window.MathJax.startup.promise;
+  }
+
+  if (window.MathJax.typesetPromise) {
+    await window.MathJax.typesetPromise();
+  }
 }
 
 function bindToolbar() {
@@ -45,6 +56,8 @@ async function boot() {
     bindToolbar();
 
     const worksheet = await loadWorksheet();
+
+    setDocumentTitle(worksheet);
     mount("#worksheet-root", renderWorksheet(worksheet));
 
     await typesetMath();
