@@ -1,0 +1,55 @@
+/* ============================================================
+   PRINT
+   ============================================================ */
+@page {
+  size: letter;
+  margin: 0;
+}
+
+@media print {
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  html,
+  body {
+    width: 8.5in;
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  .screen-only,
+  .toolbar,
+  .status,
+  .screen-panel {
+    display: none !important;
+  }
+
+  .page {
+    width: 8.5in;
+    min-height: 0;
+    height: 11in;
+    margin: 0;
+    padding: var(--page-pad-y) var(--page-pad-x);
+    box-shadow: none;
+    overflow: hidden;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .card,
+  .grid-1,
+  .grid-2,
+  .grid-3,
+  .grid-4-to-2 {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

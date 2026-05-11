@@ -117,6 +117,7 @@ pages:
         title: "Part A — Guided Practice"
         source: "guidedProblems"
         columns: "2"
+        workspaceStyle: "blank"
 
   - sections:
       - type: "workspace-problems"
@@ -124,3 +125,4 @@ pages:
         source: "workspaceProblems"
         columns: "2"
         workspaceLines: 6
+        workspaceStyle: "blank"

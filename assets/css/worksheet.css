@@ -1,0 +1,198 @@
+/* ============================================================
+   WORKSHEET HEADER
+   ============================================================ */
+.worksheet-header {
+  display: grid;
+  grid-template-columns: 1fr 2.1in;
+  gap: 18px;
+  align-items: start;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.worksheet-title {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.worksheet-subtitle {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.name-lines {
+  display: grid;
+  gap: 10px;
+  font-weight: 700;
+}
+
+/* ============================================================
+   SECTION TITLES
+   ============================================================ */
+.section-title {
+  margin: 14px 0 7px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.section-title::after {
+  content: "";
+  height: 1px;
+  background: var(--line-dark);
+  flex: 1;
+}
+
+/* ============================================================
+   PROBLEMS
+   ============================================================ */
+.problem-title {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.system {
+  font-size: 16px;
+  margin: 5px 0 7px;
+  text-align: center;
+}
+
+.steps {
+  display: grid;
+  gap: 5px;
+}
+
+.step {
+  padding-top: 4px;
+  border-top: 1px dashed #e5e7eb;
+}
+
+.step:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.math-line {
+  font-size: 14px;
+  margin: 3px 0;
+  text-align: center;
+  min-height: 19px;
+}
+
+/* ============================================================
+   METHOD CLUES
+   ============================================================ */
+.method-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.option {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 7px;
+  background: #fafafa;
+}
+
+/* ============================================================
+   SOLUTION TABLES
+   ============================================================ */
+.solution-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 6px 0;
+}
+
+.solution-table th,
+.solution-table td {
+  border: 1px solid var(--line);
+  padding: 5px;
+  text-align: center;
+}
+
+.solution-table th {
+  background: var(--soft);
+}
+
+/* ============================================================
+   WORKSPACE
+   ============================================================ */
+.workspace-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.workspace-lines {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 6px;
+}
+
+.workspace-line {
+  border-bottom: 1.2px solid var(--line-dark);
+  height: 20px;
+}
+
+.workspace-box {
+  min-height: calc(var(--workspace-lines, 4) * 28px);
+  margin: 8px 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+}
+
+.workspace-box--blank {
+  background: white;
+}
+
+.workspace-box--ruled {
+  display: grid;
+  gap: 8px;
+  padding: 0 0 6px;
+  border: 0;
+}
+
+.workspace-box--ruled .workspace-line {
+  border-bottom: 1.2px solid var(--line-dark);
+  height: 20px;
+}
+
+/* ============================================================
+   LINE COMPARISON
+   ============================================================ */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 7px 0;
+  font-size: 12px;
+}
+
+.comparison-table th,
+.comparison-table td {
+  border: 1px solid var(--line);
+  padding: 5px;
+  text-align: center;
+}
+
+.comparison-table th {
+  background: var(--soft);
+}
+
+.answer-choices {
+  margin-top: 6px;
+  padding: 6px 8px;
+  border: 1px dashed var(--line-dark);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}

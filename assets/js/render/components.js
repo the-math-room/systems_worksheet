@@ -88,7 +88,7 @@ export function renderWorkspaceProblem(problem, options = {}) {
     <div class="problem-title">${escapeHtml(id)}. ${withAnswers(title)}</div>
     <div class="system">${mathSystem(system)}</div>
     ${prompt ? `<div>${withAnswers(prompt)}</div>` : ""}
-    ${renderWorkspaceLines(workspaceLines)}
+    ${renderWorkspaceLines(workspaceLines, "Work space:", options.workspaceStyle)}
     <strong>Solution:</strong> ${answer(solution)}
   `);
 }
@@ -115,7 +115,7 @@ export function renderSolutionCountCard(problem, options = {}) {
   return card(`
     <div class="problem-title">${escapeHtml(id)}.</div>
     ${equations.map(mathInline).join("<br />")}<br />
-    ${workspaceLines > 0 ? renderWorkspaceLines(workspaceLines, "Work / rewrite:") : ""}
+    ${workspaceLines > 0 ? renderWorkspaceLines(workspaceLines, "Work / rewrite:", options.workspaceStyle) : ""}
     Work: ${answer(work)}<br />
     Number of solutions: ${answer(result)}
   `, { compact: workspaceLines === 0 });
@@ -130,6 +130,68 @@ export function renderExitTicketCard({ title, body, bodyHtml }) {
   `, { compact: true });
 }
 
+export function renderLineComparisonProblem(problem, options = {}) {
+  const {
+    id,
+    title,
+    equations,
+    rewritePrompt,
+    slope1,
+    slope2,
+    intercept1,
+    intercept2,
+    slopeCompare,
+    interceptCompare,
+    result,
+  } = problem;
+
+  const workspaceLines = options.workspaceLines ?? 0;
+  const workspaceStyle = options.workspaceStyle ?? "blank";
+
+  return card(`
+    <div class="problem-title">${escapeHtml(id)}. ${withAnswers(title ?? "")}</div>
+
+    <div class="system">
+      ${equations.map(mathInline).join("<br />")}
+    </div>
+
+    ${rewritePrompt ? `<div>${withAnswers(rewritePrompt)}</div>` : ""}
+
+    ${
+      workspaceLines > 0
+        ? renderWorkspaceLines(workspaceLines, "Rewrite / work space:", workspaceStyle)
+        : ""
+    }
+
+    <table class="comparison-table">
+      <tr>
+        <th></th>
+        <th>Slope</th>
+        <th>Y-intercept</th>
+      </tr>
+      <tr>
+        <td>Line 1</td>
+        <td>${answer(slope1)}</td>
+        <td>${answer(intercept1)}</td>
+      </tr>
+      <tr>
+        <td>Line 2</td>
+        <td>${answer(slope2)}</td>
+        <td>${answer(intercept2)}</td>
+      </tr>
+    </table>
+
+    Slopes are: ${answer(slopeCompare)}<br />
+    Y-intercepts are: ${answer(interceptCompare)}<br />
+
+    <div class="answer-choices">
+      Choices: one solution &nbsp; | &nbsp; no solution &nbsp; | &nbsp; infinite solutions
+    </div>
+
+    <strong>Number of solutions:</strong> ${answer(result)}
+  `);
+}
+
 function renderStep({ label, prompt, math }) {
   return `
     <div class="step">
@@ -139,11 +201,27 @@ function renderStep({ label, prompt, math }) {
   `;
 }
 
-function renderWorkspaceLines(count, label = "Work space:") {
-  const lines = Array.from({ length: count }, () => `<div class="workspace-line"></div>`).join("");
+function renderWorkspaceLines(count, label = "Work space:", style = "blank") {
+  const safeCount = Number.isFinite(Number(count)) ? Number(count) : 4;
+  const safeStyle = style === "ruled" ? "ruled" : "blank";
+
+  if (safeStyle === "ruled") {
+    const lines = Array.from(
+      { length: safeCount },
+      () => `<div class="workspace-line"></div>`
+    ).join("");
+
+    return `
+      <div class="workspace-label">${escapeHtml(label)}</div>
+      <div class="workspace-box workspace-box--ruled">${lines}</div>
+    `;
+  }
 
   return `
     <div class="workspace-label">${escapeHtml(label)}</div>
-    <div class="workspace-lines">${lines}</div>
+    <div
+      class="workspace-box workspace-box--blank"
+      style="--workspace-lines: ${safeCount};"
+    ></div>
   `;
 }

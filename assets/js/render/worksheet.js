@@ -18,6 +18,7 @@ import {
   renderExitTicketCard,
   renderGuidedProblem,
   renderHeader,
+  renderLineComparisonProblem,
   renderMethodCard,
   renderMethodClues,
   renderPracticeProblem,
@@ -36,6 +37,7 @@ const SECTION_RENDERERS = {
   "practice-problems": renderPracticeProblemsSection,
   "workspace-problems": renderWorkspaceProblemsSection,
   "solution-count": renderSolutionCountSection,
+  "line-comparison": renderLineComparisonSection,
   "exit-ticket": renderExitTicketSection,
 };
 
@@ -136,6 +138,7 @@ function renderWorkspaceProblemsSection(content, section) {
   const columns = section.columns ?? DEFAULT_COLUMNS;
   const options = {
     workspaceLines: section.workspaceLines ?? 4,
+    workspaceStyle: section.workspaceStyle ?? "blank",
   };
 
   return `
@@ -151,6 +154,7 @@ function renderSolutionCountSection(content, section) {
   const rules = content[rulesSource];
   const options = {
     workspaceLines: section.workspaceLines ?? 0,
+    workspaceStyle: section.workspaceStyle ?? "blank",
   };
 
   if (!rules) {
@@ -164,6 +168,20 @@ function renderSolutionCountSection(content, section) {
       ${renderSolutionRules(rules)}
     `)}
     ${grid(columns, problems.map((problem) => renderSolutionCountCard(problem, options)).join(""))}
+  `;
+}
+
+function renderLineComparisonSection(content, section) {
+  const problems = getSource(content, section);
+  const columns = section.columns ?? DEFAULT_COLUMNS;
+  const options = {
+    workspaceLines: section.workspaceLines ?? 0,
+    workspaceStyle: section.workspaceStyle ?? "blank",
+  };
+
+  return `
+    ${renderSectionTitle(section.title)}
+    ${grid(columns, problems.map((problem) => renderLineComparisonProblem(problem, options)).join(""))}
   `;
 }
 

@@ -1,0 +1,50 @@
+/* ============================================================
+   PAGE
+   ============================================================ */
+.page {
+  width: var(--page-width);
+  height: var(--page-height);
+  min-height: var(--page-height);
+  margin: 18px auto;
+  padding: var(--page-pad-y) var(--page-pad-x);
+  background: var(--page-bg);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 0.18);
+  overflow: hidden;
+  page-break-after: always;
+}
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+.grid-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.grid-4-to-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 10px;
+}
+
+.stack {
+  display: grid;
+  gap: var(--gap);
+}
+
+.mt-sm {
+  margin-top: 8px;
+}

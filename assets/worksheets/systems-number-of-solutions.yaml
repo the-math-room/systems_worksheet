@@ -1,55 +1,109 @@
 title: "Systems: How Many Solutions?"
-subtitle: "Integrated Math 101 — Comparing Lines in Slope-Intercept Form"
+subtitle: "Integrated Math 101 — Comparing Lines"
 
 content:
-  goal: "I can decide whether a system has one solution, no solution, or infinite solutions by comparing the two lines."
+  goal: "I can decide whether a system has one solution, no solution, or infinite solutions by comparing slopes and y-intercepts."
 
-  solutionRules:
+  ruleBox:
     - ["Different", "Anything", "One solution"]
     - ["Same", "Different", "No solution"]
     - ["Same", "Same", "Infinite solutions"]
 
   guidedExamples:
     - id: 1
+      title: "Different slopes"
       equations: ["y=2x+3", "y=-x+6"]
-      work: "Different slopes"
-      result: "One solution"
+      slope1: "\\(2\\)"
+      slope2: "\\(-1\\)"
+      intercept1: "\\(3\\)"
+      intercept2: "\\(6\\)"
+      slopeCompare: "different"
+      interceptCompare: "different"
+      result: "one solution"
 
     - id: 2
+      title: "Same slope, different y-intercepts"
       equations: ["y=4x+1", "y=4x-5"]
-      work: "Same slope, different y-intercepts"
-      result: "No solution"
+      slope1: "\\(4\\)"
+      slope2: "\\(4\\)"
+      intercept1: "\\(1\\)"
+      intercept2: "\\(-5\\)"
+      slopeCompare: "same"
+      interceptCompare: "different"
+      result: "no solution"
 
+  guidedRewrite:
     - id: 3
+      title: "Rewrite first, then compare"
       equations: ["y=3x-2", "2y=6x-4"]
-      work: "Divide by 2, so \\(y=3x-2\\)"
-      result: "Infinite solutions"
+      rewritePrompt: "First rewrite the second equation by dividing everything by 2."
+      slope1: "\\(3\\)"
+      slope2: "\\(3\\)"
+      intercept1: "\\(-2\\)"
+      intercept2: "\\(-2\\)"
+      slopeCompare: "same"
+      interceptCompare: "same"
+      result: "infinite solutions"
 
     - id: 4
+      title: "One algebra step"
       equations: ["y=-2x+7", "y+1=-2x+4"]
-      work: "Subtract 1, so \\(y=-2x+3\\)"
-      result: "No solution"
+      rewritePrompt: "First rewrite the second equation by subtracting 1 from both sides."
+      slope1: "\\(-2\\)"
+      slope2: "\\(-2\\)"
+      intercept1: "\\(7\\)"
+      intercept2: "\\(3\\)"
+      slopeCompare: "same"
+      interceptCompare: "different"
+      result: "no solution"
 
   practiceProblems:
     - id: 5
+      title: "You Try"
       equations: ["y=x+5", "y=3x-1"]
-      work: "Different slopes"
-      result: "One solution"
+      slope1: "\\(1\\)"
+      slope2: "\\(3\\)"
+      intercept1: "\\(5\\)"
+      intercept2: "\\(-1\\)"
+      slopeCompare: "different"
+      interceptCompare: "different"
+      result: "one solution"
 
     - id: 6
+      title: "You Try"
       equations: ["y=-2x+8", "y=-2x-4"]
-      work: "Same slope, different y-intercepts"
-      result: "No solution"
+      slope1: "\\(-2\\)"
+      slope2: "\\(-2\\)"
+      intercept1: "\\(8\\)"
+      intercept2: "\\(-4\\)"
+      slopeCompare: "same"
+      interceptCompare: "different"
+      result: "no solution"
 
+  practiceRewrite:
     - id: 7
+      title: "You Try: multiple of 2"
       equations: ["y=5x+2", "2y=10x+4"]
-      work: "Divide by 2, so \\(y=5x+2\\)"
-      result: "Infinite solutions"
+      rewritePrompt: "Rewrite the second equation first."
+      slope1: "\\(5\\)"
+      slope2: "\\(5\\)"
+      intercept1: "\\(2\\)"
+      intercept2: "\\(2\\)"
+      slopeCompare: "same"
+      interceptCompare: "same"
+      result: "infinite solutions"
 
     - id: 8
+      title: "You Try: one algebra step"
       equations: ["y=3x-2", "y+4=3x+1"]
-      work: "Subtract 4, so \\(y=3x-3\\)"
-      result: "No solution"
+      rewritePrompt: "Rewrite the second equation first."
+      slope1: "\\(3\\)"
+      slope2: "\\(3\\)"
+      intercept1: "\\(-2\\)"
+      intercept2: "\\(-3\\)"
+      slopeCompare: "same"
+      interceptCompare: "different"
+      result: "no solution"
 
 pages:
   - header: true
@@ -57,16 +111,32 @@ pages:
       - type: "goal"
 
       - type: "solution-count"
-        title: "Part A — Guided Examples"
+        title: "Rule: Compare the Lines"
         source: "guidedExamples"
-        rulesSource: "solutionRules"
+        rulesSource: "ruleBox"
         columns: "2"
-        workspaceLines: 2
+
+      - type: "line-comparison"
+        title: "Part A — Guided Comparisons"
+        source: "guidedExamples"
+        columns: "2"
 
   - sections:
-      - type: "solution-count"
-        title: "Part B — You Try"
-        source: "practiceProblems"
-        rulesSource: "solutionRules"
+      - type: "line-comparison"
+        title: "Part B — Rewrite First"
+        source: "guidedRewrite"
         columns: "2"
-        workspaceLines: 4
+        workspaceLines: 2
+        workspaceStyle: "blank"
+
+      - type: "line-comparison"
+        title: "Part C — You Try"
+        source: "practiceProblems"
+        columns: "2"
+
+      - type: "line-comparison"
+        title: "Part D — You Try: Rewrite First"
+        source: "practiceRewrite"
+        columns: "2"
+        workspaceLines: 3
+        workspaceStyle: "blank"

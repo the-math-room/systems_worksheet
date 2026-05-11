@@ -1,0 +1,52 @@
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --ink: #111827;
+  --muted: #4b5563;
+  --line: #d1d5db;
+  --line-dark: #9ca3af;
+  --page-bg: #ffffff;
+  --screen-bg: #e5e7eb;
+  --soft: #f3f4f6;
+  --soft-blue: #eff6ff;
+  --blue-line: #bfdbfe;
+  --soft-amber: #fffbeb;
+  --amber-line: #fde68a;
+  --key: #15803d;
+  --toolbar: #111827;
+
+  --page-width: 8.5in;
+  --page-height: 11in;
+  --page-pad-x: 0.55in;
+  --page-pad-y: 0.5in;
+
+  --radius: 10px;
+  --gap: 8px;
+  --font-body: Arial, Helvetica, sans-serif;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--screen-bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+strong {
+  font-weight: 800;
+}

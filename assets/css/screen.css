@@ -1,0 +1,96 @@
+/* ============================================================
+   SCREEN TOOLBAR
+   ============================================================ */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  background: var(--toolbar);
+  color: white;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
+}
+
+.toolbar button {
+  border: 1px solid #374151;
+  border-radius: 999px;
+  background: white;
+  color: #111827;
+  padding: 0.4rem 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.toolbar .hint {
+  color: #d1d5db;
+  font-size: 12px;
+}
+
+/* ============================================================
+   NON-PRINTING WORKSHEET PICKER / AUTHORING PANEL
+   ============================================================ */
+.screen-panel {
+  width: var(--page-width);
+  margin: 18px auto 0;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: white;
+  box-shadow: 0 4px 18px rgb(0 0 0 / 0.12);
+}
+
+.worksheet-picker {
+  display: grid;
+  gap: 12px;
+}
+
+.worksheet-picker__top {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.worksheet-picker__control {
+  display: grid;
+  gap: 4px;
+}
+
+.worksheet-picker label {
+  font-weight: 800;
+}
+
+.worksheet-picker select {
+  min-width: 280px;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: inherit;
+  background: white;
+}
+
+.worksheet-picker__description {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.authoring-notes {
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.authoring-notes summary {
+  cursor: pointer;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.authoring-notes code {
+  background: var(--soft);
+  padding: 1px 4px;
+  border-radius: 4px;
+}

@@ -1,0 +1,106 @@
+/* ============================================================
+   STATUS
+   ============================================================ */
+.status {
+  width: var(--page-width);
+  margin: 18px auto 0;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: white;
+  color: var(--muted);
+}
+
+.status:empty {
+  display: none;
+}
+
+/* ============================================================
+   BOXES
+   ============================================================ */
+.box {
+  border-radius: var(--radius);
+  padding: 9px 11px;
+  margin: 8px 0;
+}
+
+.box--goal {
+  background: var(--soft-blue);
+  border: 1px solid var(--blue-line);
+}
+
+.box--directions {
+  background: var(--soft);
+  border: 1px solid var(--line);
+}
+
+.box--hint {
+  background: var(--soft-amber);
+  border: 1px solid var(--amber-line);
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 9px 10px;
+  break-inside: avoid;
+  background: white;
+}
+
+.card--compact {
+  padding: 7px 9px;
+}
+
+/* ============================================================
+   BLANKS + LINES
+   ============================================================ */
+.line,
+.blank {
+  display: inline-block;
+  border-bottom: 1.4px solid var(--ink);
+  height: 1.1em;
+  vertical-align: -0.05em;
+}
+
+.line {
+  min-width: 1.25in;
+}
+
+.line--medium {
+  min-width: 1.6in;
+}
+
+.blank {
+  min-width: 1.25in;
+}
+
+.blank--sm {
+  min-width: 0.75in;
+}
+
+.blank--md {
+  min-width: 1.5in;
+}
+
+.blank--lg {
+  min-width: 2.25in;
+}
+
+/* ============================================================
+   TEACHER KEY
+   ============================================================ */
+.key-answer {
+  display: none;
+  color: var(--key);
+  font-weight: 800;
+}
+
+body.show-key .student-blank {
+  display: none;
+}
+
+body.show-key .key-answer {
+  display: inline;
+}
