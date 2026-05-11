@@ -16,8 +16,10 @@ import {
   withAnswers,
 } from "./html.js";
 
+
 export function renderToolbar() {
   return `
+    <a class="toolbar__link" href="../">Projects</a>
     <button data-action="print">Print</button>
     <button data-action="toggle-key">Toggle Teacher Key</button>
     <span class="hint">Student version prints by default. Toggle key before printing teacher copy.</span>
