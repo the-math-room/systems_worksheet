@@ -1,0 +1,291 @@
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --ink: #111827;
+  --muted: #4b5563;
+  --line: #d1d5db;
+  --line-dark: #9ca3af;
+  --page-bg: #ffffff;
+  --screen-bg: #e5e7eb;
+  --soft: #f3f4f6;
+  --soft-blue: #eff6ff;
+  --blue-line: #bfdbfe;
+  --soft-amber: #fffbeb;
+  --amber-line: #fde68a;
+  --key: #15803d;
+  --toolbar: #111827;
+
+  --page-width: 8.5in;
+  --page-height: 11in;
+  --page-pad-x: 0.55in;
+  --page-pad-y: 0.5in;
+
+  --radius: 10px;
+  --gap: 8px;
+  --font-body: Arial, Helvetica, sans-serif;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--screen-bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 1.35;
+}
+
+strong { font-weight: 800; }
+
+/* ============================================================
+   SCREEN TOOLBAR + STATUS
+   ============================================================ */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  background: var(--toolbar);
+  color: white;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
+}
+
+.toolbar button {
+  border: 1px solid #374151;
+  border-radius: 999px;
+  background: white;
+  color: #111827;
+  padding: 0.4rem 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.toolbar .hint { color: #d1d5db; font-size: 12px; }
+
+.status {
+  width: var(--page-width);
+  margin: 18px auto 0;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  background: white;
+  color: var(--muted);
+}
+
+.status:empty { display: none; }
+
+/* ============================================================
+   PAGE + TYPOGRAPHY
+   ============================================================ */
+.page {
+  width: var(--page-width);
+  min-height: var(--page-height);
+  margin: 18px auto;
+  padding: var(--page-pad-y) var(--page-pad-x);
+  background: var(--page-bg);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 0.18);
+  page-break-after: always;
+}
+
+.worksheet-header {
+  display: grid;
+  grid-template-columns: 1fr 2.1in;
+  gap: 18px;
+  align-items: start;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.worksheet-title {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.worksheet-subtitle {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.name-lines {
+  display: grid;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.section-title {
+  margin: 14px 0 7px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.section-title::after {
+  content: "";
+  height: 1px;
+  background: var(--line-dark);
+  flex: 1;
+}
+
+/* ============================================================
+   LAYOUT PRIMITIVES
+   ============================================================ */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+
+.grid-4-to-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 10px;
+}
+
+.stack { display: grid; gap: var(--gap); }
+.mt-sm { margin-top: 8px; }
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+.box {
+  border-radius: var(--radius);
+  padding: 9px 11px;
+  margin: 8px 0;
+}
+
+.box--goal { background: var(--soft-blue); border: 1px solid var(--blue-line); }
+.box--directions { background: var(--soft); border: 1px solid var(--line); }
+.box--hint { background: var(--soft-amber); border: 1px solid var(--amber-line); }
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 9px 10px;
+  break-inside: avoid;
+  background: white;
+}
+
+.card--compact { padding: 7px 9px; }
+
+.problem-title {
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.system {
+  font-size: 16px;
+  margin: 5px 0 7px;
+  text-align: center;
+}
+
+.steps {
+  display: grid;
+  gap: 5px;
+}
+
+.step {
+  padding-top: 4px;
+  border-top: 1px dashed #e5e7eb;
+}
+
+.step:first-child { border-top: 0; padding-top: 0; }
+
+.math-line {
+  font-size: 14px;
+  margin: 3px 0;
+  text-align: center;
+  min-height: 19px;
+}
+
+.line,
+.blank {
+  display: inline-block;
+  border-bottom: 1.4px solid var(--ink);
+  height: 1.1em;
+  vertical-align: -0.05em;
+}
+
+.line { min-width: 1.25in; }
+.line--medium { min-width: 1.6in; }
+
+.blank { min-width: 1.25in; }
+.blank--sm { min-width: 0.75in; }
+.blank--md { min-width: 1.5in; }
+.blank--lg { min-width: 2.25in; }
+
+.key-answer {
+  display: none;
+  color: var(--key);
+  font-weight: 800;
+}
+
+body.show-key .student-blank { display: none; }
+body.show-key .key-answer { display: inline; }
+
+.method-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.option {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 7px;
+  background: #fafafa;
+}
+
+.solution-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 6px 0;
+}
+
+.solution-table th,
+.solution-table td {
+  border: 1px solid var(--line);
+  padding: 5px;
+  text-align: center;
+}
+
+.solution-table th { background: var(--soft); }
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@page {
+  size: letter;
+  margin: 0;
+}
+
+@media print {
+  body { background: white; }
+  .toolbar,
+  .status { display: none; }
+  .page {
+    margin: 0;
+    width: 8.5in;
+    min-height: 11in;
+    box-shadow: none;
+  }
+}
